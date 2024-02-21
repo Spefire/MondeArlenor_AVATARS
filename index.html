@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Génération d'icônes</title>
+  <!-- JSZip -->
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js"></script>
+  <!-- FileSaver.js -->
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2/dist/FileSaver.min.js"></script>
+</head>
+
+<body>
+  <h1>Génération d'icônes</h1>
+  <button id="btnDownload">Télécharger les icônes</button>
+  <ul id="pngList"></ul>
+  <canvas id="canvas" style="display: none;"></canvas>
+  <style>
+    body {
+      color: white;
+      background: black;
+    }
+
+    button {
+      padding: 1rem;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    let pngFilesList = [];
+
+    document.getElementById('btnDownload').addEventListener('click', async function () {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+      // Créer une instance de JSZip
+      const zip = new JSZip();
+      const promises = [];
+
+      pngFilesList.forEach(pngFile => {
+        // Créer une nouvelle promesse pour charger chaque image
+        const promise = new Promise((resolve, reject) => {
+          // Assurez-vous que l'image est accessible sans restrictions CORS ou hébergée sur le même domaine
+          const imageSrc = './' + pngFile + '.png'; // Chemin vers votre image
+          const image = new Image();
+
+          image.onload = function () {
+            canvas.width = image.width;
+            canvas.height = image.height;
+            ctx.drawImage(image, 0, 0);
+            trimCanvas(canvas);
+            // Utiliser toBlob pour obtenir le contenu du canvas sous forme de blob
+            canvas.toBlob(function (blob) {
+              // Ajouter le blob au ZIP
+              zip.file('icon_' + pngFile + '.png', blob, { binary: true });
+              resolve(); // Résoudre la promesse une fois que l'image est chargée et ajoutée au zip
+            });
+          };
+
+          image.src = imageSrc;
+        });
+
+        // Ajouter la promesse à la liste des promesses
+        promises.push(promise);
+      });
+
+      // Attendre que toutes les promesses soient résolues (c'est-à-dire que toutes les images soient chargées)
+      await Promise.all(promises);
+
+      // Générer le fichier ZIP
+      zip.generateAsync({ type: "blob" })
+        .then(function (content) {
+          // Sauvegarder le fichier ZIP avec FileSaver.js
+          saveAs(content, "images.zip");
+        });
+    });
+
+    // Fonction pour récupérer la liste des fichiers PNG et les afficher
+    function fetchPngList() {
+      fetch('/get-items')
+        .then(response => response.json()) // Convertit la réponse en JSON
+        .then(pngFiles => {
+          pngFilesList = pngFiles;
+          const list = document.getElementById('pngList');
+          list.innerHTML = ''; // Efface la liste actuelle
+          pngFiles.forEach(file => {
+            const listItem = document.createElement('li');
+            listItem.textContent = file;
+            list.appendChild(listItem);
+          });
+        })
+        .catch(error => console.error('Erreur lors de la récupération des fichiers PNG:', error));
+    }
+
+    function trimCanvas(c) {
+      const ctx = c.getContext('2d');
+      const width = c.width;
+      const height = c.height;
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+      let minX = width;
+      let minY = height;
+      let maxX = 0;
+      let maxY = 0;
+      let found = false;
+
+      // Parcourir l'image pixel par pixel pour trouver les bords de la forme
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const alpha = data[(width * y + x) * 4 + 3];
+          if (alpha > 0) {
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+            found = true;
+          }
+        }
+      }
+
+      // Redimensionner le canvas si une forme non transparente a été trouvée
+      /*if (found) {
+          const trimmedWidth = maxX - minX + 1;
+          const trimmedHeight = maxY - minY + 1;
+          const trimmed = ctx.getImageData(minX, minY, trimmedWidth, trimmedHeight);
+          c.width = trimmedWidth;
+          c.height = trimmedHeight;
+          ctx.putImageData(trimmed, 0, 0);
+      }*/
+
+      // Redimensionner le canvas si une forme non transparente a été trouvée
+      if (found) {
+        const trimmedWidth = maxX - minX + 1;
+        const trimmedHeight = maxY - minY + 1;
+        const maxSideLength = Math.max(trimmedWidth, trimmedHeight);
+
+        // Calculer les coordonnées pour centrer la forme dans un carré
+        const offsetX = Math.floor((maxSideLength - trimmedWidth) / 2);
+        const offsetY = Math.floor((maxSideLength - trimmedHeight) / 2);
+
+        // Créer un nouveau canvas carré
+        const squareCanvas = document.createElement('canvas');
+        squareCanvas.width = squareCanvas.height = maxSideLength;
+        const squareCtx = squareCanvas.getContext('2d');
+
+        // Dessiner la forme dans le nouveau canvas carré
+        squareCtx.drawImage(c, minX, minY, trimmedWidth, trimmedHeight, offsetX, offsetY, trimmedWidth, trimmedHeight);
+
+        // Mettre à jour le canvas original avec le nouveau canvas carré
+        c.width = c.height = maxSideLength;
+        ctx.clearRect(0, 0, maxSideLength, maxSideLength);
+        ctx.drawImage(squareCanvas, 0, 0);
+      }
+    }
+
+    // Appel la fonction au chargement de la page
+    window.onload = fetchPngList;
+  </script>
+</body>
+
+</html>
