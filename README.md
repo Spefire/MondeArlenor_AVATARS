@@ -10,9 +10,9 @@ Si vous souhaitez générer des icônes (images croppées) à partir d'autres, i
 - Puis cliquer sur "Télécharger" et verser le contenu du zip dans le dossier "./generation_icons"
 - Vérifier et commiter sur Git !
 
-## Dossier "Files"
+## Dossiers "Files"
 
-C'est le dossier où se trouve les images finales / propres, qui vont être utilisées.
+Ces dossiers contiennent les images finales / propres, qui vont être utilisées pour chaque meiker.
 Voici les règles qui s'y appliquent :
 - Le nom de l'item a comme format `{{nom de l'item}}_{{index de sa version déclinée}}.png`.
 - Un item a forcément une icône associée placée au même endroit.
@@ -22,14 +22,13 @@ Voici les règles qui s'y appliquent :
 
 ## Fichier de configuration "Files"
 
-C'est le fichier de configuration de la création d'avatar où la liste des items est ordonnée par "calque".
+C'est le fichier de configuration des différents meikers où la liste des items est ordonnée par "calque".
 Un item est défini par :
 - un **libellé** qui est le nom affiché
 - un **name** qui est le nom de base du fichier, avec son dossier si y a
 - un **nb** qui est le nombre de versions déclinables (le `item_00.png` ne compte pas !)
 - un **removable** qui indique la présence d'un `item_00.png`, pour pouvoir enlever l'item
 - et un **typeColors** qui indique le code couleur à proposer (mis à `null` si pas de couleur)
-
 
 ## Liste des items
 
