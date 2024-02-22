@@ -1,0 +1,15 @@
+solo = 1 seul item de la cathégorie ou aucun (transparent)
+multi = pluieurs items de la cathégorie possibles en même temps ou aucun
+
+front_hair (solo)
+meches (solo)
+ears (solo)
+hair (solo)
+head (solo)
+meches_back (solo)
+magic_elem (multi)
+boobs (solo)
+hand (solo)
+body (solo)
+back_hair (solo)
+tail (solo)
