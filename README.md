@@ -30,6 +30,7 @@ Un item est défini par :
 - un **removable** qui indique la présence d'un `item_00.png`, pour pouvoir enlever l'item
 - et un **typeColors** qui indique le code couleur à proposer (mis à `null` si pas de couleur)
 
+
 ## Liste des items
 
 - ✅ body
