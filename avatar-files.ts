@@ -13,7 +13,7 @@ export class ETypeCategory {
 
 export const avatarItems: AssetsItem[] = [
   { category: ETypeCategory.Details, libelle: 'Queue', name: 'tails/tail', nb: 7, removable: true, typeColors: ETypeColors.Other },
-  { category: ETypeCategory.Hair, libelle: 'Cheveux arrière', name: 'back_hairs/back_hair', nb: 13, removable: true, typeColors: '' },
+  { category: ETypeCategory.Hair, libelle: 'Cheveux arrière', name: 'back_hairs/back_hair', nb: 13, removable: true, typeColors: ETypeColors.Hair },
   { category: ETypeCategory.Body, libelle: 'Corps', name: 'bodies/body', nb: 3, removable: false, typeColors: ETypeColors.Skin },
   { category: ETypeCategory.Body, libelle: 'Mains', name: 'hand', nb: 1, removable: false, typeColors: ETypeColors.Skin },
   { category: ETypeCategory.Body, libelle: 'Poitrine', name: 'boobs/boobs', nb: 2, removable: true, typeColors: ETypeColors.Skin },
