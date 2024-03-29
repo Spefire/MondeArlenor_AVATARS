@@ -5,7 +5,8 @@ export class ETypeColors {
 }
 
 export const characterItems: AssetsItem[] = [
-  { libelle: 'Corps', name: 'body', nb: 1, typeColors: ETypeColors.Skin },
+  { libelle: 'Corps', name: 'bodys/body', nb: 2, typeColors: null },
+  { libelle: 'Body Add-ons', name: 'body_add-ons/addons', nb: 3, typeColors: null },
   { libelle: 'Haut', name: 'tops/top', nb: 3, typeColors: ETypeColors.Other },
   { libelle: 'Bas', name: 'bottoms/bottom', nb: 3, typeColors: ETypeColors.Other },
   { libelle: 'Chaussures', name: 'shoes', nb: 1, typeColors: ETypeColors.Other },
@@ -13,6 +14,9 @@ export const characterItems: AssetsItem[] = [
   { libelle: 'Yeux', name: 'eyes', nb: 1, typeColors: null },
   { libelle: 'Sourcils', name: 'eyebrow', nb: 1, typeColors: null },
   { libelle: 'Cils', name: 'eyelashes', nb: 1, typeColors: null },
+  { libelle: 'Cornes', name: 'horns', nb: 7, typeColors: null },
+  { libelle: 'Queues', name: 'tails', nb: 3, typeColors: null },
+  { libelle: 'Ailes', name: 'wings', nb: 2, typeColors: null },
   { libelle: 'Cheveux', name: 'hairs/hair', nb: 5, typeColors: ETypeColors.Hair },
 ];
 
