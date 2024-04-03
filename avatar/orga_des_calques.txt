@@ -8,6 +8,10 @@ hair (solo)
 head (solo)
 meche_back (solo)
 magic_elem (multi)
+glove
+arm
+shoulders (solo)
+collar (solo)
 boobs (solo)
 hand (solo)
 body (solo)
