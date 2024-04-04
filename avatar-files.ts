@@ -8,6 +8,7 @@ export class ETypeCategory {
   public static Body = 'Corps';
   public static Head = 'Tête';
   public static Hair = 'Cheveux';
+  public static Clothes = 'Vêtements';
   public static Details = 'Détails';
 }
 
@@ -17,6 +18,12 @@ export const avatarItems: AssetsItem[] = [
   { category: ETypeCategory.Body, libelle: 'Corps', name: 'bodies/body', nb: 3, removable: false, typeColors: ETypeColors.Skin },
   { category: ETypeCategory.Body, libelle: 'Mains', name: 'hand', nb: 1, removable: false, typeColors: ETypeColors.Skin },
   { category: ETypeCategory.Body, libelle: 'Poitrine', name: 'boobs/boobs', nb: 2, removable: true, typeColors: ETypeColors.Skin },
+
+  { category: ETypeCategory.Clothes, libelle: 'Cou', name: 'tops_collar/collar', nb: 2, removable: true, typeColors: ETypeColors.Other },
+  { category: ETypeCategory.Clothes, libelle: 'Mains', name: 'gloves/gloves', nb: 8, removable: true, typeColors: ETypeColors.Other },
+  { category: ETypeCategory.Clothes, libelle: 'Bras droit', name: 'tops_left_arm/left_arm', nb: 8, removable: true, typeColors: ETypeColors.Other },
+  { category: ETypeCategory.Clothes, libelle: 'Épaules', name: 'shoulders/shoulders', nb: 2, removable: true, typeColors: ETypeColors.Other },
+
   { category: ETypeCategory.Details, libelle: 'Magie', name: 'magic_elems/magic_elem', nb: 10, removable: true, typeColors: ETypeColors.Other },
 
   { category: ETypeCategory.Hair, libelle: 'Mèche droite', name: 'meches_back/meche_back', nb: 8, removable: true, typeColors: ETypeColors.Hair },
